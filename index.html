@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engagement Hub</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+        
+        input, select {
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+        
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #3b82f6;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* Login Page Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .login-card {
+            width: 380px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .login-logo {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #3b82f6;
+        }
+        
+        /* Dashboard Styles */
+        .search-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .search-container input {
+            flex: 1;
+            margin-right: 10px;
+            margin-bottom: 0;
+        }
+        
+        .customer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+        }
+        
+        .customer-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+        }
+        
+        .customer-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-color: #3b82f6;
+        }
+        
+        .customer-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 15px;
+            color: #1e293b;
+        }
+        
+        .customer-details {
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        /* Customer Detail Page Styles */
+        #customer-page {
+            padding: 0;
+            max-width: 100%;
+        }
+        
+        .customer-layout {
+            display: flex;
+            min-height: calc(100vh - 56px);
+        }
+        
+        .sidebar {
+            width: 240px;
+            flex-shrink: 0;
+            background-color: #f8fafc;
+            border-right: 1px solid #e2e8f0;
+        }
+        
+        .sidebar-content {
+            padding: 20px;
+        }
+        
+        .sidebar-content h2 {
+            font-size: 15px;
+            margin-bottom: 16px;
+            color: #475569;
+            font-weight: 600;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background-color: #f8fafc;
+        }
+        
+        .folder-structure {
+            height: 100%;
+        }
+        
+        .folder {
+            margin-bottom: 8px;
+            padding: 10px 12px;
+            background-color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border: 1px solid #e2e8f0;
+            font-size: 13px;
+        }
+        
+        .folder:hover {
+            background-color: #f1f5f9;
+        }
+        
+        .folder-title {
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .folder-title::before {
+            content: "📁";
+            margin-right: 8px;
+        }
+        
+        /* Back Button */
+        .back-button {
+            margin-bottom: 16px;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: #3b82f6;
+            font-weight: 500;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+        
+        .back-button:hover {
+            color: #2563eb;
+        }
+        
+        /* Customer Top Section */
+        .customer-top-section {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+        
+        .customer-header-minimal {
+            flex: 1;
+            margin-bottom: 0;
+            padding: 0;
+        }
+        
+        .customer-header-minimal h1 {
+            margin-bottom: 4px;
+            color: #1e293b;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .customer-header-minimal p {
+            color: #64748b;
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        .customer-info-card {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            padding: 16px;
+            margin-bottom: 0;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .customer-info-card h2 {
+            margin-bottom: 8px;
+            color: #1e293b;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        
+        .customer-info-card p {
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+        
+        /* Minimal Engagement Journey */
+        .engagement-journey-minimal {
+            margin-bottom: 24px;
+            padding: 0;
+        }
+        
+        .engagement-journey-minimal h3 {
+            font-size: 15px;
+            margin-bottom: 20px;
+            color: #1e293b;
+            font-weight: 600;
+        }
+        
+        .journey-steps-minimal {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+        
+        .journey-step-minimal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex: 1;
+        }
+        
+        .step-circle-minimal {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            color: #64748b;
+            font-size: 12px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.2s;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-circle-minimal.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .step-line-minimal {
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+        
+        .journey-step-minimal:last-child .step-line-minimal {
+            display: none;
+        }
+        
+        .step-label-minimal {
+            font-size: 11px;
+            text-align: center;
+            color: #64748b;
+            font-weight: 500;
+            margin-top: 6px;
+        }
+        
+        .step-label-minimal.active {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        
+        /* Links Container */
+        .links-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .link-item {
+            background-color: white;
+            border-radius: 6px;
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #e2e8f0;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .link-item:hover {
+            background-color: #f8fafc;
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        
+        /* Chat Window Styles */
+        .chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #3b82f6;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .chat-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+        }
+        
+        .chat-toggle-icon {
+            font-size: 20px;
+        }
+        
+        .chat-container {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 320px;
+            height: 420px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            background: white;
+            z-index: 1000;
+            transform: translateY(20px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-container.open {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .chat-header {
+            background-color: #3b82f6;
+            color: white;
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .chat-close:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            background-color: #f8fafc;
+        }
+        
+        .message {
+            margin-bottom: 12px;
+            max-width: 85%;
+        }
+        
+        .message.user {
+            margin-left: auto;
+            background-color: #3b82f6;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 12px 12px 0 12px;
+            font-size: 13px;
+        }
+        
+        .message.bot {
+            background-color: white;
+            padding: 8px 12px;
+            border-radius: 12px 12px 12px 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            font-size: 13px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 12px;
+            background-color: white;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            margin-bottom: 0;
+            margin-right: 8px;
+            padding: 8px;
+            font-size: 13px;
+        }
+        
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page" class="login-container">
+        <div class="card login-card">
+            <div class="login-logo">Engagement Hub</div>
+            <h2 style="font-size: 18px; margin-bottom: 8px; color: #334155;">Welcome Back</h2>
+            <p style="margin-bottom: 20px; color: #64748b; font-size: 13px;">Sign in to your account</p>
+            
+            <form id="login-form">
+                <input type="text" placeholder="Username or Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+            </form>
+            
+            <div style="margin-top: 16px; font-size: 12px;">
+                <a href="#" style="color: #3b82f6; text-decoration: none;">Forgot your password?</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navbar - Hidden on login page -->
+    <div id="navbar" class="navbar hidden">
+        <div class="nav-logo">Engagement Hub</div>
+        <div class="user-info">
+            <div class="user-avatar">JD</div>
+            <div>John Doe</div>
+        </div>
+    </div>
+    
+    <!-- Dashboard Page -->
+    <div id="dashboard-page" class="container hidden">
+        <h1 style="font-size: 22px; margin-bottom: 4px; color: #1e293b;">Customer Dashboard</h1>
+        <p style="margin-bottom: 20px; color: #64748b; font-size: 13px;">Select a customer to view details</p>
+        
+        <div class="search-container">
+            <input type="text" placeholder="Search customers...">
+            <button class="btn btn-primary">Search</button>
+        </div>
+        
+        <div class="customer-grid">
+            <div class="card customer-card" onclick="selectCustomer('TechCorp Inc.')">
+                <div class="customer-name">TechCorp Inc.</div>
+                <div class="customer-details">Technology • 250 employees • San Francisco</div>
+            </div>
+            
+            <div class="card customer-card" onclick="selectCustomer('Global Finance Ltd.')">
+                <div class="customer-name">Global Finance Ltd.</div>
+                <div class="customer-details">Finance • 500 employees • New York</div>
+            </div>
+            
+            <div class="card customer-card" onclick="selectCustomer('HealthPlus Medical')">
+                <div class="customer-name">HealthPlus Medical</div>
+                <div class="customer-details">Healthcare • 150 employees • Chicago</div>
+            </div>
+            
+            <div class="card customer-card" onclick="selectCustomer('EduFuture Academy')">
+                <div class="customer-name">EduFuture Academy</div>
+                <div class="customer-details">Education • 80 employees • Boston</div>
+            </div>
+            
+            <div class="card customer-card" onclick="selectCustomer('Retail Giant Co.')">
+                <div class="customer-name">Retail Giant Co.</div>
+                <div class="customer-details">Retail • 1000 employees • Dallas</div>
+            </div>
+            
+            <div class="card customer-card" onclick="selectCustomer('Green Energy Solutions')">
+                <div class="customer-name">Green Energy Solutions</div>
+                <div class="customer-details">Energy • 300 employees • Denver</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Customer Detail Page -->
+    <div id="customer-page" class="hidden">
+        <div class="customer-layout">
+            <div class="sidebar">
+                <div class="sidebar-content">
+                    <h2>SharePoint Folders</h2>
+                    <div class="folder">
+                        <div class="folder-title">01 Prep</div>
+                    </div>
+                    <div class="folder">
+                        <div class="folder-title">02 Interview</div>
+                    </div>
+                    <div class="folder">
+                        <div class="folder-title">03 Material</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <a href="#" class="back-button" onclick="goBackToDashboard()">← Back to Customers</a>
+                
+                <!-- Customer Header and Info in same line - Minimal -->
+                <div class="customer-top-section">
+                    <div class="customer-header-minimal">
+                        <h1 id="customer-title">Customer Name</h1>
+                        <p id="customer-description">Industry • Employees • Location</p>
+                    </div>
+                    
+                    <div class="customer-info-card">
+                        <h2>Customer Information</h2>
+                        <p>This area will display detailed information about the selected customer.</p>
+                        <p>You can add customer details, notes, and other relevant information here.</p>
+                    </div>
+                </div>
+                
+                <!-- Engagement Journey - Minimal Design -->
+                <div class="engagement-journey-minimal">
+                    <h3>Engagement Journey</h3>
+                    <div class="journey-steps-minimal">
+                        <div class="journey-step-minimal">
+                            <div class="step-circle-minimal active">1</div>
+                            <div class="step-line-minimal"></div>
+                            <div class="step-label-minimal active">Pre-Kickoff</div>
+                        </div>
+                        <div class="journey-step-minimal">
+                            <div class="step-circle-minimal">2</div>
+                            <div class="step-line-minimal"></div>
+                            <div class="step-label-minimal">Discovery</div>
+                        </div>
+                        <div class="journey-step-minimal">
+                            <div class="step-circle-minimal">3</div>
+                            <div class="step-line-minimal"></div>
+                            <div class="step-label-minimal">Workshop</div>
+                        </div>
+                        <div class="journey-step-minimal">
+                            <div class="step-circle-minimal">4</div>
+                            <div class="step-line-minimal"></div>
+                            <div class="step-label-minimal">Implementation</div>
+                        </div>
+                        <div class="journey-step-minimal">
+                            <div class="step-circle-minimal">5</div>
+                            <div class="step-label-minimal">Review</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="links-container">
+                    <div class="link-item">
+                        <span>📌</span> MIRO
+                    </div>
+                    <div class="link-item">
+                        <span>📊</span> SLIDO
+                    </div>
+                    <div class="link-item">
+                        <span>📋</span> JIRA
+                    </div>
+                    <div class="link-item">
+                        <span>💼</span> LINKEDIN
+                    </div>
+                    <div class="link-item">
+                        <span>⏱️</span> 7TABS
+                    </div>
+                    <div class="link-item">
+                        <span>📈</span> TOGGL
+                    </div>
+                    <div class="link-item">
+                        <span>🧠</span> PSYCHOLOGY TEST
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat Toggle Button -->
+        <button class="chat-toggle" onclick="toggleChat()">
+            <div class="chat-toggle-icon">💬</div>
+        </button>
+        
+        <!-- Chat Window -->
+        <div class="chat-container" id="chatWindow">
+            <div class="chat-header">
+                <span>Gen AI Assistant</span>
+                <button class="chat-close" onclick="toggleChat()">×</button>
+            </div>
+            <div class="chat-messages">
+                <div class="message bot">
+                    Hello! I'm your Gen AI assistant. How can I help you with this customer today?
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message...">
+                <button class="btn btn-primary">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Page navigation
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('login-page').classList.add('hidden');
+            document.getElementById('navbar').classList.remove('hidden');
+            document.getElementById('dashboard-page').classList.remove('hidden');
+        });
+        
+        function selectCustomer(customerName) {
+            document.getElementById('dashboard-page').classList.add('hidden');
+            document.getElementById('customer-page').classList.remove('hidden');
+            
+            document.getElementById('customer-title').textContent = customerName;
+            
+            // Set customer details based on selection
+            let description = "";
+            if (customerName === "TechCorp Inc.") {
+                description = "Technology • 250 employees • San Francisco";
+            } else if (customerName === "Global Finance Ltd.") {
+                description = "Finance • 500 employees • New York";
+            } else if (customerName === "HealthPlus Medical") {
+                description = "Healthcare • 150 employees • Chicago";
+            } else if (customerName === "EduFuture Academy") {
+                description = "Education • 80 employees • Boston";
+            } else if (customerName === "Retail Giant Co.") {
+                description = "Retail • 1000 employees • Dallas";
+            } else if (customerName === "Green Energy Solutions") {
+                description = "Energy • 300 employees • Denver";
+            }
+            
+            document.getElementById('customer-description').textContent = description;
+        }
+        
+        function goBackToDashboard() {
+            document.getElementById('customer-page').classList.add('hidden');
+            document.getElementById('dashboard-page').classList.remove('hidden');
+        }
+        
+        // Chat toggle function
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>

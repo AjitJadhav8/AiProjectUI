@@ -155,6 +155,15 @@
         }
         
         /* Customer Detail Page Styles */
+        #customer-page {
+            padding: 0;
+            max-width: 100%;
+        }
+        
+        .customer-page-content {
+            padding: 20px;
+        }
+        
         .back-button {
             margin-bottom: 20px;
             display: inline-block;
@@ -169,16 +178,23 @@
         
         .customer-layout {
             display: flex;
-            gap: 20px;
+            min-height: calc(100vh - 100px);
         }
         
         .sidebar {
             width: 250px;
             flex-shrink: 0;
+            background-color: #f8f9fa;
+            border-right: 1px solid #ddd;
+        }
+        
+        .sidebar-content {
+            padding: 20px;
         }
         
         .main-content {
             flex: 1;
+            padding: 20px;
         }
         
         .folder-structure {
@@ -188,10 +204,11 @@
         .folder {
             margin-bottom: 10px;
             padding: 12px;
-            background-color: #f8f9fa;
+            background-color: white;
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.2s;
+            border: 1px solid #eee;
         }
         
         .folder:hover {
@@ -225,6 +242,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            border: 1px solid #eee;
         }
         
         .link-item:hover {
@@ -312,7 +330,7 @@
     <!-- Login Page -->
     <div id="login-page" class="login-container">
         <div class="card login-card">
-            <div class="login-logo">Gen AI Platform</div>
+            <div class="login-logo">Engagement Hub</div>
             <h2>Welcome Back</h2>
             <p class="mb-20">Sign in to your account</p>
             
@@ -331,7 +349,7 @@
     <!-- Dashboard Page -->
     <div id="dashboard-page" class="container hidden">
         <div class="header">
-            <div class="logo">Gen AI Platform</div>
+            <div class="logo">Engagement Hub</div>
             <div class="user-info">
                 <div class="user-avatar">JD</div>
                 <div>John Doe</div>
@@ -380,17 +398,10 @@
     </div>
     
     <!-- Customer Detail Page -->
-    <div id="customer-page" class="container hidden">
-        <a href="#" class="back-button" onclick="goBackToDashboard()">← Back to Customers</a>
-        
-        <div class="customer-header">
-            <h1 id="customer-title">Customer Name</h1>
-            <p id="customer-description">Industry • Employees • Location</p>
-        </div>
-        
+    <div id="customer-page" class="hidden">
         <div class="customer-layout">
             <div class="sidebar">
-                <div class="card folder-structure">
+                <div class="sidebar-content">
                     <h2>SharePoint Folders</h2>
                     <div class="folder">
                         <div class="folder-title">01 Prep</div>
@@ -405,6 +416,13 @@
             </div>
             
             <div class="main-content">
+                <a href="#" class="back-button" onclick="goBackToDashboard()">← Back to Customers</a>
+                
+                <div class="customer-header">
+                    <h1 id="customer-title">Customer Name</h1>
+                    <p id="customer-description">Industry • Employees • Location</p>
+                </div>
+                
                 <div class="links-container">
                     <div class="link-item">
                         <span>📌</span> MIRO
